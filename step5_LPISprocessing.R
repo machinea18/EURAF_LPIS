@@ -30,4 +30,5 @@ results <- mclapply(X = 1:length(parcels), FUN = parcel_processing,
 results<- unlist(results)
 
 write.csv(results, "FILEANME.csv") #please change filename 
+
 #this outputs a one column CSV file that can then be attached back to the LPIS data
