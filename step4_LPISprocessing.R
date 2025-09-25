@@ -6,6 +6,7 @@ library(parallel) #package for parallel processing
 parcels <- vect("PATH1") #LPIS parcels
 TCD10m <- rast("PATH4") #copernicus TCD layer, likely VRT
 numcores <- 1 #change this to reflect the number of cores you will be using
+agriculture <- c("LIST") #this is the list of codes to include as agriculture
 
 
 
@@ -14,6 +15,12 @@ parcel_processing <- function(parcels, x) {
   #weights means that the fraction of the overlap in the polygon is also relevant
   #so if a pixels only overlaps 50% its weight will only be 50%
   return(zonal(TCD10m, parcels[x,], weights = TRUE))
+  if(parcels$CODE %in% agriculture) { #NOTE $CODE must be replaced with the 
+    #column name of the LPIS code
+    return(zonal(TCD10m, parcels[x,], weights = TRUE))
+  } else {
+    return(NA)
+  }
 }
 
 #note this code does not work on a windows computer. It will run with only one core
